@@ -16,4 +16,4 @@ description: 銀行プラグイン
 commands:
   bank:
     description: "銀行コマンド"
-    usage: "/bank money <dp|wp|info> <金額>"
+    usage: "/bank <dp|wp|info> <金額>"
