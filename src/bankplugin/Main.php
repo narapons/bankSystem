@@ -15,7 +15,7 @@ class Main extends PluginBase implements Listener{
 
 	public function onEnable(){
 		$PluginName = "bankSystem";
-		$version = "1.0.0";
+		$version = "1.1";
 		$this->getlogger()->info($PluginName." v".$version."を読み込みました。作者:masaiwasa");
     	$this->getlogger()->warning("製作者偽りと二次配布、改造、改造配布は禁止します");
 
@@ -51,6 +51,7 @@ class Main extends PluginBase implements Listener{
 							$money = $this->EconomyAPI->myMoney($name);
 							if(isset($args[1])){
 								$price = intval($args[1]);
+								if ($price >= 0){
 								if($money >= $price){
 									$this->addMoneyBank($name, $price);
 									$newmoney = $this->nowMoneyBank($name);
@@ -62,6 +63,9 @@ class Main extends PluginBase implements Listener{
 									return true;
 								}
 							}else{
+									$sender->sendMessage("§b[銀行]>>>金額は0以上である必要があります！");
+							}
+							}else{
 								$sender->sendMessage("§b[銀行]>>>§c預ける金額を入力して下さい。");
 								return true;
 							}
@@ -72,6 +76,7 @@ class Main extends PluginBase implements Listener{
 							$money = $this->EconomyAPI->myMoney($name);
 							if(isset($args[1])){
 								$price = intval($args[1]);
+								if ($price >= 0){
 								if($this->removeMoneyBank($name, $price)){
 									$newmoney = $this->nowMoneyBank($name);
 									$this->EconomyAPI->addMoney($name, $price);
@@ -81,6 +86,9 @@ class Main extends PluginBase implements Listener{
 									$sender->sendMessage("§b[銀行]>>>§c預金額が足りません。");
 									return true;
 								}
+							}else{
+									$sender->sendMessage("§b[銀行]>>>金額は0以上である必要があります！");
+							}
 							}else{
 								$sender->sendMessage("§b[銀行]>>>§c引き出す金額を入力して下さい。");
 								return true;
@@ -99,9 +107,9 @@ class Main extends PluginBase implements Listener{
 
 
 									default:
-										$sender->sendMessage("§b[銀行]>>>§f/bank dp <金額> §a銀行に$<金額>預けます");
-										$sender->sendMessage("§b[銀行]>>>§fbank wp <金額> §a銀行から$<金額>引き出します");
-										$sender->sendMessage("§b[銀行]>>>§f/bank info §a銀行に預けてる金額を確認します");
+										$sender->sendMessage("§b[銀行]>>>§f/bank dp <金額> §aお金の預金");
+										$sender->sendMessage("§b[銀行]>>>§fbank wp <金額> §aお金の引き出し");
+										$sender->sendMessage("§b[銀行]>>>§f/bank info §a預金の金額確認");
 										return true;
 										break;
 					}
